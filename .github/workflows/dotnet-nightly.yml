@@ -1,0 +1,32 @@
+name: Nightly Build
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    branches: [ main ]
+    
+env:
+  PROJECT_PATH: '.\HappyReflection\HappyReflection.csproj'
+  
+jobs:
+  nightly-build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set env NIGHTLY_TAG
+      run: echo "NIGHTLY_TAG=nightly-$(date +'%Y%m%d')" >> $GITHUB_ENV
+ #   - uses: rickstaa/action-create-tag@v1
+ #     with:
+ #       tag: ${{ env.NIGHTLY_TAG }}
+ #       message: "nightly build"
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
