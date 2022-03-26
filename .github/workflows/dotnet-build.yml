@@ -1,0 +1,42 @@
+name: Push Build
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+    branches: [ main ]
+
+env:
+  VERSION_NUMBER: 0.0.1-dev #todo
+  PROJECT_PATH: '.\HappyReflection\HappyReflection.csproj'
+  NUGET_API_SECRET:  ${{ secrets.NUGET_API_KEY }}
+  
+jobs:
+  debug:
+    name: Debug
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set env GITHUB_SHA_SHORT
+        run: echo "GITHUB_SHA_SHORT=$(git rev-parse --short '$GITHUB_SHA')" >> $GITHUB_ENV
+      - name: Set env NIGHTLY_TAG
+        run: echo "NIGHTLY_TAG=nightly-$(date +'%Y%m%d')" >> $GITHUB_ENV
+      - name: Dump env
+        run: env | sort
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+  dev-build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
