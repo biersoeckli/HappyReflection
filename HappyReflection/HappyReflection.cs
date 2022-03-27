@@ -9,10 +9,10 @@ namespace HappyReflection
 {
     public static class HappyReflection
     {
-        public static HappyReflectionConfiguration GlobalConfiguration { get; set; } = new();
+        public static HappyReflectionConfiguration GlobalConfiguration { get; set; } = new HappyReflectionConfiguration();
 
-        public static List<Assembly> AllAssemblies { get; private set; } = new();
-        public static List<Type> AllTypes { get; private set; } = new();
+        public static List<Assembly> AllAssemblies { get; private set; } = new List<Assembly>();
+        public static List<Type> AllTypes { get; private set; } = new List<Type>();
 
         public static string AssemblyDirectory
         {
