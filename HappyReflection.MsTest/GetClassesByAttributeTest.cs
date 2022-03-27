@@ -1,15 +1,16 @@
 using HappyReflection.Test.Attributes;
 using HappyReflection.Test.Models;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace HappyReflection.Test
 {
+    [TestClass]
     public class GetClassesByAttributeTest
     {
-        [Test]
+        [TestMethod]
         public void TestValidByGenericType()
         {
             IList<Type> foundTypes = HappyReflection.GetClassesByAttribute<NomNomNomAttribute>();
@@ -17,7 +18,7 @@ namespace HappyReflection.Test
             Assert.AreEqual(1, foundTypes.Count());
         }
 
-        [Test]
+        [TestMethod]
         public void TestValidByTypeVariable()
         {
             IList<Type> foundTypes = HappyReflection.GetClassesByAttribute(typeof(NomNomNomAttribute));
@@ -25,17 +26,17 @@ namespace HappyReflection.Test
             Assert.AreEqual(1, foundTypes.Count());
         }
 
-        [Test]
+        [TestMethod]
         public void TestNoResultsFound()
         {
             IList<Type> foundTypes = HappyReflection.GetClassesByAttribute<NotAnnotatedAttribute>();
-            Assert.IsEmpty(foundTypes);
+            Assert.AreEqual(0, foundTypes.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void TestInputNull()
         {
-            Assert.Throws<ArgumentNullException>(() => HappyReflection.GetClassesByAttribute(null));
+            Assert.ThrowsException<ArgumentNullException>(() => HappyReflection.GetClassesByAttribute(null));
         }
     }
 }

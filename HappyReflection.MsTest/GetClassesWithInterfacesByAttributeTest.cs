@@ -1,16 +1,17 @@
 using HappyReflection.Models;
 using HappyReflection.Test.Attributes;
 using HappyReflection.Test.Models;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace HappyReflection.Test
 {
+    [TestClass]
     public class GetClassesWithInterfacesByAttributeTest
     {
-        [Test]
+        [TestMethod]
         public void TestValidByGenericType()
         {
             IList<HappyReflectionTypeWithInterface> foundTypeWithInterfaces = HappyReflection.GetClassesWithInterfacesByAttribute<NomNomNomAttribute>();
@@ -19,7 +20,7 @@ namespace HappyReflection.Test
             Assert.AreEqual(typeof(ChocolateWithAttribute), foundTypeWithInterfaces.First().Type);
         }
 
-        [Test]
+        [TestMethod]
         public void TestValidByTypeVariable()
         {
             IList<HappyReflectionTypeWithInterface> foundTypeWithInterfaces = HappyReflection.GetClassesWithInterfacesByAttribute(typeof(NomNomNomAttribute));
@@ -28,17 +29,17 @@ namespace HappyReflection.Test
             Assert.AreEqual(typeof(ChocolateWithAttribute), foundTypeWithInterfaces.First().Type);
         }
 
-        [Test]
+        [TestMethod]
         public void TestNoResultsFound()
         {
             IList<HappyReflectionTypeWithInterface>? foundTypeWithInterfaces = HappyReflection.GetClassesWithInterfacesByAttribute<NotAnnotatedAttribute>();
-            Assert.IsEmpty(foundTypeWithInterfaces);
+            Assert.AreEqual(0, foundTypeWithInterfaces.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void TestInputNull()
         {
-            Assert.Throws<ArgumentNullException>(() => HappyReflection.GetClassesWithInterfacesByAttribute(null));
+            Assert.ThrowsException<ArgumentNullException>(() => HappyReflection.GetClassesWithInterfacesByAttribute(null));
         }
     }
 }

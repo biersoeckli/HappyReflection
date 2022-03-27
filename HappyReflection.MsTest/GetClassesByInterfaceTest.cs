@@ -1,14 +1,15 @@
 using HappyReflection.Test.Models;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace HappyReflection.Test
 {
+    [TestClass]
     public class GetClassesByInterfaceTest
     {
-        [Test]
+        [TestMethod]
         public void TestValidByGenericType()
         {
             IList<Type> foundTypes = HappyReflection.GetClassesByInterface<IChocolate>();
@@ -18,7 +19,7 @@ namespace HappyReflection.Test
             Assert.IsTrue(foundTypes.Contains(typeof(ChocolateWithInterface)));
         }
 
-        [Test]
+        [TestMethod]
         public void TestValidByTypeVariable()
         {
             IList<Type> foundTypes = HappyReflection.GetClassesByInterface(typeof(IChocolate));
@@ -28,17 +29,17 @@ namespace HappyReflection.Test
             Assert.IsTrue(foundTypes.Contains(typeof(ChocolateWithInterface)));
         }
 
-        [Test]
+        [TestMethod]
         public void TestNoResultsFound()
         {
             IList<Type> foundTypes = HappyReflection.GetClassesByInterface<IUnusedInterface>();
-            Assert.IsEmpty(foundTypes);
+            Assert.AreEqual(0, foundTypes.Count);
         }
 
-        [Test]
+        [TestMethod]
         public void TestInputNull()
         {
-            Assert.Throws<ArgumentNullException>(() => HappyReflection.GetClassesByInterface(null));
+            Assert.ThrowsException<ArgumentNullException>(() => HappyReflection.GetClassesByInterface(null));
         }
     }
 }

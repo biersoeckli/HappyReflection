@@ -1,20 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>net5.0;net6.0;netstandard2.0;netstandard2.1</TargetFrameworks>
+	<PropertyGroup>
+		<TargetFrameworks>net5.0;net6.0;netstandard2.0;netstandard2.1</TargetFrameworks>
 		<PackageId>HappyReflection</PackageId>
 		<Authors>biersoeckli</Authors>
 		<Description>A C# helper util to find types by their name, interface or attribute.</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageTags>HappyReflection, Reflection, Happy, Type, Interface, Attribute, Search</PackageTags>
 		<IsPackable>true</IsPackable>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RepositoryUrl>https://github.com/biersoeckli/HappyReflection</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-  </PropertyGroup>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/biersoeckli/HappyReflection</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Model\" />
-    <None Include="..\README.md" Pack="true" PackagePath="\" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="Model\" />
+		<None Include="..\README.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
 </Project>

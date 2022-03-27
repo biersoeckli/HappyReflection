@@ -1,22 +1,23 @@
 using HappyReflection.Test.Models;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
 namespace HappyReflection.Test
 {
+    [TestClass]
     public class GetTypeByNameTest
     {
-        [Test]
+        [TestMethod]
         public void TestValidByGenericType()
         {
             Assert.AreEqual(typeof(ChocolateWithInterface), HappyReflection.GetTypeByName("chocolatewithinterface"));
             Assert.AreEqual(typeof(ChocolateWithAttribute), HappyReflection.GetTypeByName("ChocolateWithAttribute"));
         }
 
-        [Test]
+        [TestMethod]
         public void TestInputNull()
         {
-            Assert.Throws<ArgumentNullException>(() => HappyReflection.GetTypeByName(null));
+            Assert.ThrowsException<ArgumentNullException>(() => HappyReflection.GetTypeByName(null));
         }
     }
 }
